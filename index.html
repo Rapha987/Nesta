@@ -6,7 +6,7 @@
     <title>Trasporto di Fiducia</title>
     <link rel="stylesheet" href="Styles.css">
     <style>
-        /* Aggiungi stile per centrare il logo */
+        /* Stile per centrare il logo */
         .logo-container {
             text-align: center;
             margin: 20px 0;
@@ -54,25 +54,87 @@
             font-weight: bold;
         }
 
-        /* Stile per il pulsante WhatsApp */
-        .whatsapp-button a {
-            text-decoration: none;
+        /* Stile per la sezione eroica */
+        .hero {
+            background-color: #4CAF50;
+            padding: 40px 0;
+            text-align: center;
         }
 
-        .whatsapp-button button {
+        /* Stile per la sezione servizi */
+        .services {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .services ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .services ul li {
+            margin: 10px 0;
+        }
+
+        /* Stile per la sezione contatti */
+        .contact {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        #contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        #contact-form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        #contact-form input, #contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #contact-form button {
+            background-color: #2D5CBA;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #contact-form button:hover {
+            background-color: #244a92;
+        }
+
+        /* Stile per il footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Stile per il tasto WhatsApp */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             background-color: #25D366;
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            margin-top: 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .whatsapp-button button:hover {
-            background-color: #1DA851;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -137,20 +199,59 @@
 
                 <button type="submit">Invia</button>
             </form>
-            
-            <!-- Pulsante WhatsApp -->
-            <div class="whatsapp-button">
-                <a href="https://wa.me/393207143814" target="_blank">
-                    <button type="button">Contattaci su WhatsApp</button>
-                </a>
-            </div>
         </div>
     </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/+393207143814" target="_blank">
+        <button class="whatsapp-button">📞</button>
+    </a>
 
     <footer>
         <div class="container">
             <p>&copy; 2024 Azienda di Trasporti. Tutti i diritti riservati.</p>
         </div>
     </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('contact-form');
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        // Sostituisci con il tuo URL di Google Form
+        const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdkZ1zBoT1nCp-0itba-dY0ENqtNRsWm5lX9JbUsSCaOVqkiw/viewform?usp=sf_link';
+
+        // Costruisci la stringa di dati per il form
+        const formData = new URLSearchParams();
+        formData.append('entry.264624785', name);  // Sostituisci con l'entry del Nome
+        formData.append('entry.1131412714', email); // Sostituisci con l'entry dell'Email
+        formData.append('entry.1963418909', message); // Sostituisci con l'entry del Messaggio
+
+        try {
+            // Invia i dati al Google Form
+            const response = await fetch(googleFormURL, {
+                method: 'POST',
+                mode: 'no-cors', // Necessario per inviare dati a un Google Form
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData.toString()
+            });
+
+            alert('Dati inviati con successo!');
+            form.reset();
+        } catch (error) {
+            console.error('Errore:', error);
+            alert('Errore durante l\'invio dei dati.');
+        }
+    });
+});
+    </script>
 </body>
 </html>

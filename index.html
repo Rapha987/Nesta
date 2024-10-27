@@ -136,6 +136,28 @@
             cursor: pointer;
             font-size: 24px;
         }
+
+        /* Stile per il calcolatore di costi */
+        .cost-calculator {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .calculator-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .calculator-form input {
+            margin-bottom: 15px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -152,6 +174,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#services">Servizi</a></li>
                     <li><a href="#about">Chi Siamo</a></li>
+                    <li><a href="#calculator">Calcola Costi</a></li> <!-- Link to calculator section -->
                     <li><a href="#contact">Contatti</a></li>
                 </ul>
             </nav>
@@ -181,6 +204,28 @@
         <div class="container">
             <h2>Chi Siamo</h2>
             <p>Siamo un'azienda leader nel settore dei trasporti, con anni di esperienza e una vasta rete di collegamenti.</p>
+        </div>
+    </section>
+
+    <section id="calculator" class="cost-calculator">
+        <div class="container">
+            <h2>Calcolatore di Costi</h2>
+            <form class="calculator-form" id="cost-calculator-form">
+                <label for="distance">Distanza (km):</label>
+                <input type="number" id="distance" name="distance" required>
+
+                <label for="weight">Peso (kg):</label>
+                <input type="number" id="weight" name="weight" required>
+
+                <label for="service-type">Tipo di Servizio:</label>
+                <select id="service-type" name="service-type">
+                    <option value="standard">Standard</option>
+                    <option value="express">Espresso</option>
+                </select>
+
+                <button type="submit">Calcola Costo</button>
+            </form>
+            <div class="result" id="cost-result"></div>
         </div>
     </section>
 
@@ -214,44 +259,62 @@
     </footer>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('contact-form');
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contact-form');
 
-    form.addEventListener('submit', async function (event) {
-        event.preventDefault();
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
 
-        // Sostituisci con il tuo URL di Google Form
-        const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdkZ1zBoT1nCp-0itba-dY0ENqtNRsWm5lX9JbUsSCaOVqkiw/viewform?usp=sf_link';
+                // Sostituisci con il tuo URL di Google Form
+                const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdkZ1zBoT1nCp-0itba-dY0ENqtNRsWm5lX9JbUsSCaOVqkiw/viewform?usp=sf_link';
 
-        // Costruisci la stringa di dati per il form
-        const formData = new URLSearchParams();
-        formData.append('entry.264624785', name);  // Sostituisci con l'entry del Nome
-        formData.append('entry.1131412714', email); // Sostituisci con l'entry dell'Email
-        formData.append('entry.1963418909', message); // Sostituisci con l'entry del Messaggio
+                // Costruisci la stringa di dati per il form
+                const formData = new URLSearchParams();
+                formData.append('entry.264624785', name);  // Sostituisci con l'entry del Nome
+                formData.append('entry.1131412714', email); // Sostituisci con l'entry dell'Email
+                formData.append('entry.1963418909', message); // Sostituisci con l'entry del Messaggio
 
-        try {
-            // Invia i dati al Google Form
-            const response = await fetch(googleFormURL, {
-                method: 'POST',
-                mode: 'no-cors', // Necessario per inviare dati a un Google Form
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: formData.toString()
+                try {
+                    // Invia i dati al Google Form
+                    const response = await fetch(googleFormURL, {
+                        method: 'POST',
+                        mode: 'no-cors', // Necessario per inviare dati a un Google Form
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData.toString()
+                    });
+
+                    alert('Dati inviati con successo!');
+                    form.reset();
+                } catch (error) {
+                    console.error('Errore:', error);
+                    alert('Errore durante l\'invio dei dati.');
+                }
             });
 
-            alert('Dati inviati con successo!');
-            form.reset();
-        } catch (error) {
-            console.error('Errore:', error);
-            alert('Errore durante l\'invio dei dati.');
-        }
-    });
-});
+            // Cost Calculator
+            const calculatorForm = document.getElementById('cost-calculator-form');
+            const costResult = document.getElementById('cost-result');
+
+            calculatorForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const distance = parseFloat(document.getElementById('distance').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const serviceType = document.getElementById('service-type').value;
+
+                // Example rates with 30% discount
+                const ratePerKm = serviceType === 'express' ? 1.4 : 0.7; // Rate per km based on service type
+                const cost = (distance * ratePerKm) + (weight * 0.5); // Additional weight charge
+
+                costResult.textContent = `Il costo stimato è di €${cost.toFixed(2)}`;
+            });
+        });
     </script>
     
 </body>

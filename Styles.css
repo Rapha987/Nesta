@@ -90,9 +90,23 @@ nav ul li a {
     background-color: #555;
 }
 
+.map iframe {
+    width: 100%; /* Rendi la mappa responsiva */
+    max-width: 800px; /* Limita la larghezza massima */
+    height: 450px; /* Altezza della mappa */
+    border: 0; /* Rimuovi il bordo */
+
 footer {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 10px 0;
+}
+
+.map {
+    padding: 40px 0;
+    text-align: center;
+}
+
+
 }

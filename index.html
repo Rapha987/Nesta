@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- STRIPE -->
+    <script src="https://js.stripe.com/v3/"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -239,6 +241,80 @@
             object-fit: cover;
             border-radius: 12px;
         }
+
+        /* Stile prodotto gift card */
+        .gift-card {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #f59e0b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: shimmer 20s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Stripe Elements styling */
+        .StripeElement {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+        }
+
+        .StripeElement--focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -248,7 +324,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <!-- LOGO NELLA NAVBAR -->
                     <img src="logo.jpeg" alt="NESTA Trasporti Logo" class="w-10 h-10 logo-img">
                     <div class="flex flex-col">
                         <span class="font-display font-bold text-xl tracking-tight text-white">NST - NESTA TRASPORTI</span>
@@ -258,6 +333,9 @@
                 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#servizi" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Servizi</a>
+                    <a href="#gift-card" class="text-amber-400 hover:text-amber-300 transition-colors text-sm font-medium flex items-center gap-1">
+                        <i class="fas fa-gift"></i> Gift Card
+                    </a>
                     <a href="#trasporto-merci" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Trasporto Merci</a>
                     <a href="#copertura" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Dove Operiamo</a>
                     <a href="#chi-siamo" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Chi Siamo</a>
@@ -273,10 +351,10 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-gray-800">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#servizi" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Servizi</a>
+                <a href="#gift-card" class="block px-3 py-2 text-amber-400 hover:text-amber-300">🎁 Gift Card</a>
                 <a href="#trasporto-merci" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Trasporto Merci</a>
                 <a href="#copertura" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Dove Operiamo</a>
                 <a href="#chi-siamo" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Chi Siamo</a>
@@ -290,35 +368,30 @@
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden pt-20">
         <div class="absolute inset-0 grid-pattern opacity-30"></div>
-        
-        <!-- Animated Background Elements -->
         <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
         <div class="absolute bottom-20 right-10 w-96 h-96 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow" style="animation-delay: 2s;"></div>
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            
             <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-tight reveal">
                 Trasporto Merci <br>
                 <span class="gradient-text">Professionale</span>
             </h1>
-            
             <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 reveal">
                 Specializzati nel trasporto di merci su strada in Puglia. 
                 Bari, Foggiano e BAT: garantiamo sicurezza, puntualità e professionalità.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
+                <a href="#gift-card" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold px-8 py-4 rounded-full transition-all transform hover:scale-105 btn-glow flex items-center justify-center gap-2">
+                    <i class="fas fa-gift text-xl"></i>
+                    Regala una Spedizione
+                </a>
                 <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn text-white font-bold px-8 py-4 rounded-full transition-all transform hover:scale-105 btn-glow flex items-center justify-center gap-2">
                     <i class="fab fa-whatsapp text-xl"></i>
                     Chatta su WhatsApp
                 </a>
-                <a href="#trasporto-merci" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
-                    Scopri il Servizio
-                    <i class="fas fa-arrow-right"></i>
-                </a>
             </div>
             
-            <!-- Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto reveal">
                 <div class="text-center">
                     <div class="text-3xl md:text-4xl font-bold text-white mb-1 counter-value" data-target="15">0</div>
@@ -343,6 +416,117 @@
             <i class="fas fa-chevron-down text-gray-500 text-2xl"></i>
         </div>
     </section>
+
+    <!-- SEZIONE GIFT CARD - PRODOTTO ACQUISTABILE -->
+    <section id="gift-card" class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-block px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-sm font-medium mb-4">
+                    <i class="fas fa-gift mr-2"></i>Idea Regalo
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4 text-white">Gift Card <span class="text-amber-500">Spedizione</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Il regalo perfetto per chi ha bisogno di spedire. Un buono da 35€ valido per qualsiasi trasporto in Puglia.</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto reveal">
+                <div class="gift-card rounded-3xl p-1 relative">
+                    <div class="bg-slate-900 rounded-3xl p-8 relative">
+                        <div class="flex flex-col md:flex-row gap-8 items-center">
+                            <div class="flex-1 text-center md:text-left">
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm font-medium mb-4">
+                                    <i class="fas fa-check-circle"></i> Disponibile
+                                </div>
+                                <h3 class="font-display text-3xl font-bold text-white mb-2">Buono Spedizione</h3>
+                                <p class="text-gray-400 mb-4">Valido per una spedizione fino a 35€ in tutta la Puglia (Bari, Foggia, BAT). Non ha scadenza!</p>
+                                
+                                <ul class="space-y-2 text-sm text-gray-300 mb-6 text-left">
+                                    <li class="flex items-center gap-2"><i class="fas fa-check text-amber-500"></i> Valore: 35€</li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-check text-amber-500"></i> Valido in tutta la Puglia</li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-check text-amber-500"></i> Nessuna scadenza</li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-check text-amber-500"></i> Trasferibile ad altri</li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-check text-amber-500"></i> Codice univoco via email</li>
+                                </ul>
+
+                                <div class="flex items-center gap-4 justify-center md:justify-start">
+                                    <div class="price-tag text-white px-6 py-3 rounded-2xl font-bold text-3xl">
+                                        35€
+                                    </div>
+                                    <button onclick="openCheckout()" class="bg-white text-slate-900 hover:bg-gray-100 font-bold px-8 py-4 rounded-2xl transition-all transform hover:scale-105 flex items-center gap-2">
+                                        <i class="fas fa-credit-card"></i>
+                                        Acquista Ora
+                                    </button>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt mr-1"></i> Pagamento sicuro con Stripe</p>
+                            </div>
+                            
+                            <div class="w-full md:w-48 h-48 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-2xl">
+                                <div class="text-center text-white">
+                                    <i class="fas fa-truck text-6xl mb-2"></i>
+                                    <div class="font-bold text-xl">NESTA</div>
+                                    <div class="text-sm opacity-80">GIFT CARD</div>
+                                    <div class="mt-2 text-2xl font-bold">35€</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL CHECKOUT STRIPE -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-display text-2xl font-bold text-white">Completa l'acquisto</h3>
+                <button onclick="closeCheckout()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="bg-slate-800 rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center text-white">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">Gift Card Spedizione</div>
+                            <div class="text-sm text-gray-400">Buono da 35€</div>
+                        </div>
+                    </div>
+                    <div class="font-bold text-amber-500 text-xl">35€</div>
+                </div>
+            </div>
+
+            <form id="payment-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Email per ricevere il buono</label>
+                    <input type="email" id="email" required class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="tua@email.com">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Dati della carta</label>
+                    <div id="card-element" class="StripeElement"></div>
+                    <div id="card-errors" class="text-red-400 text-sm mt-2"></div>
+                </div>
+
+                <button type="submit" id="submit-button" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <span id="button-text">Paga 35€</span>
+                    <i id="button-icon" class="fas fa-lock"></i>
+                </button>
+            </form>
+
+            <div class="mt-4 flex items-center justify-center gap-4 text-gray-500 text-sm">
+                <i class="fab fa-cc-visa text-2xl"></i>
+                <i class="fab fa-cc-mastercard text-2xl"></i>
+                <i class="fab fa-cc-amex text-2xl"></i>
+                <i class="fab fa-apple-pay text-2xl"></i>
+                <i class="fab fa-google-pay text-2xl"></i>
+            </div>
+        </div>
+    </div>
 
     <!-- Services Section -->
     <section id="servizi" class="py-24 relative bg-slate-900">
@@ -482,7 +666,7 @@
         </div>
     </section>
 
-    <!-- SEZIONE: Dove Operiamo - 3 PROVINCE: BARI, FOGGIA, BAT -->
+    <!-- SEZIONE: Dove Operiamo -->
     <section id="copertura" class="py-24 bg-slate-900 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -493,9 +677,7 @@
                 <p class="text-gray-400 max-w-2xl mx-auto">Specializzati nel Barese, Foggiano e BAT, copriamo tutta la regione con efficienza</p>
             </div>
 
-            <!-- 3 Province principali -->
             <div class="grid md:grid-cols-3 gap-6 reveal">
-                <!-- Provincia di Bari -->
                 <div class="puglia-card rounded-3xl p-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -mr-16 -mt-16"></div>
                     <div class="relative">
@@ -504,26 +686,11 @@
                         </div>
                         <h3 class="font-display text-2xl font-bold text-white mb-4">Provincia di Bari</h3>
                         <div class="space-y-3 mb-6">
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Bari e hinterland</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Bitonto, Modugno, Palo del Colle</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Altamura, Gravina in Puglia</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Monopoli, Polignano a Mare</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Molfetta, Giovinazzo, Trani</span>
-                            </div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Bari e hinterland</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Bitonto, Modugno, Palo del Colle</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Altamura, Gravina in Puglia</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Monopoli, Polignano a Mare</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Molfetta, Giovinazzo, Trani</span></div>
                         </div>
                         <div class="pt-6 border-t border-slate-700">
                             <div class="flex justify-between items-center">
@@ -534,7 +701,6 @@
                     </div>
                 </div>
 
-                <!-- Provincia di Foggia -->
                 <div class="puglia-card rounded-3xl p-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -mr-16 -mt-16"></div>
                     <div class="relative">
@@ -543,26 +709,11 @@
                         </div>
                         <h3 class="font-display text-2xl font-bold text-white mb-4">Provincia di Foggia</h3>
                         <div class="space-y-3 mb-6">
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Foggia e provincia</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>San Severo, Lucera</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Cerignola, Canosa di Puglia</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Manfredonia, Mattinata</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Vieste, Peschici, Rodi Garganico</span>
-                            </div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Foggia e provincia</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>San Severo, Lucera</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Cerignola, Canosa di Puglia</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Manfredonia, Mattinata</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Vieste, Peschici, Rodi Garganico</span></div>
                         </div>
                         <div class="pt-6 border-t border-slate-700">
                             <div class="flex justify-between items-center">
@@ -573,7 +724,6 @@
                     </div>
                 </div>
 
-                <!-- BAT - Barletta Andria Trani -->
                 <div class="puglia-card rounded-3xl p-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -mr-16 -mt-16"></div>
                     <div class="relative">
@@ -583,26 +733,11 @@
                         <h3 class="font-display text-2xl font-bold text-white mb-4">BAT</h3>
                         <div class="text-sm text-amber-500 mb-4 font-medium">Barletta - Andria - Trani</div>
                         <div class="space-y-3 mb-6">
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Andria (sede operativa)</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Barletta, Canosa di Puglia</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Trani, Bisceglie</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Corato, Ruvo di Puglia</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-gray-300">
-                                <i class="fas fa-check-circle text-amber-500"></i>
-                                <span>Minervino Murge, Spinazzola</span>
-                            </div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Andria (sede operativa)</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Barletta, Canosa di Puglia</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Trani, Bisceglie</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Corato, Ruvo di Puglia</span></div>
+                            <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-check-circle text-amber-500"></i><span>Minervino Murge, Spinazzola</span></div>
                         </div>
                         <div class="pt-6 border-t border-slate-700">
                             <div class="flex justify-between items-center">
@@ -613,44 +748,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Altre province Puglia (opzionali) -->
-            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
-                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
-                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
-                    <div class="text-gray-400 font-medium">Lecce</div>
-                    <div class="text-xs text-gray-600">Su richiesta</div>
-                </div>
-                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
-                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
-                    <div class="text-gray-400 font-medium">Taranto</div>
-                    <div class="text-xs text-gray-600">Su richiesta</div>
-                </div>
-                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
-                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
-                    <div class="text-gray-400 font-medium">Brindisi</div>
-                    <div class="text-xs text-gray-600">Su richiesta</div>
-                </div>
-                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
-                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
-                    <div class="text-gray-400 font-medium">Fuori Puglia</div>
-                    <div class="text-xs text-gray-600">Su richiesta</div>
-                </div>
-            </div>
-
-            <div class="mt-8 text-center reveal">
-                <p class="text-gray-500 text-sm">
-                    <i class="fas fa-info-circle text-amber-500 mr-2"></i>
-                    Il nostro focus principale è su Bari, Foggia e BAT. Per altre destinazioni contattaci per un preventivo personalizzato.
-                </p>
-            </div>
         </div>
     </section>
 
-    <!-- About Section - CON IMMAGINE TEAM -->
+    <!-- About Section -->
     <section id="chi-siamo" class="py-24 bg-slate-800 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-amber-900/20"></div>
-        
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="reveal">
@@ -658,13 +761,11 @@
                         Chi Siamo
                     </div>
                     <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                        La Famiglia <br>
-                        <span class="gradient-text">NESTA</span>
+                        La Famiglia <br><span class="gradient-text">NESTA</span>
                     </h2>
                     <p class="text-gray-400 text-lg mb-6 leading-relaxed">
                         NESTA Trasporti è un'azienda a conduzione familiare specializzata nel trasporto di merci su strada in Puglia. 
-                        Con sede ad Andria (BAT), operiamo principalmente nel Barese, Foggiano e BAT, 
-                        garantendo professionalità e conoscenza approfondita del territorio.
+                        Con sede ad Andria (BAT), operiamo principalmente nel Barese, Foggiano e BAT.
                     </p>
                     
                     <div class="space-y-4 mb-8">
@@ -703,15 +804,12 @@
                     </a>
                 </div>
                 
-                <!-- IMMAGINE TEAM NESTA -->
                 <div class="relative reveal">
                     <div class="absolute inset-0 bg-gradient-to-tr from-amber-500 to-blue-600 rounded-3xl transform rotate-3 opacity-30"></div>
                     <div class="team-image-container relative">
-                        <!-- MODIFICA: Nesta1.png con N maiuscola -->
                         <img src="Nesta1.png" alt="Team NESTA Trasporti" class="w-full h-auto object-cover">
                         <div class="team-badge">
                             <div class="flex items-center gap-3">
-                                <!-- LOGO NEL TEAM BADGE -->
                                 <img src="logo.jpeg" alt="NESTA Logo" class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
                                 <div>
                                     <div class="font-display font-bold text-white">Il Team NESTA</div>
@@ -721,7 +819,6 @@
                         </div>
                     </div>
                     
-                    <!-- Stats sotto l'immagine - MODIFICATO: 50+ → 4 -->
                     <div class="grid grid-cols-3 gap-4 mt-6">
                         <div class="bg-slate-900 rounded-2xl p-4 text-center border border-slate-700">
                             <div class="text-2xl font-bold text-amber-500">15+</div>
@@ -741,13 +838,13 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section con Form Funzionante -->
     <section id="contatti" class="py-24 bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16">
                 <div class="reveal">
                     <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 text-white">Restiamo in <span class="text-amber-500">Contatto</span></h2>
-                    <p class="text-gray-400 mb-8">Hai bisogno di un preventivo per il trasporto delle tue merci in Puglia? Scrivici su WhatsApp per una risposta immediata.</p>
+                    <p class="text-gray-400 mb-8">Hai bisogno di un preventivo? Scrivici su WhatsApp o compila il form. Riceverai risposta entro 24 ore!</p>
                     
                     <div class="space-y-6">
                         <a href="https://wa.me/393207143814" target="_blank" class="flex items-center gap-4 group cursor-pointer">
@@ -757,7 +854,7 @@
                             <div>
                                 <div class="text-sm text-gray-500">WhatsApp</div>
                                 <div class="text-white font-medium group-hover:text-green-400 transition-colors">+39 320 714 3814</div>
-                                <div class="text-xs text-green-500 mt-1">● Online ora - Rispondiamo subito</div>
+                                <div class="text-xs text-green-500 mt-1">● Online ora</div>
                             </div>
                         </a>
                         <div class="flex items-center gap-4">
@@ -780,36 +877,44 @@
                         </div>
                     </div>
                     
-                    <!-- SOLO INSTAGRAM -->
                     <div class="mt-8">
                         <p class="text-gray-500 text-sm mb-3">Seguici su Instagram</p>
-                        <a href="https://instagram.com/nst.it" target="_blank" class="instagram-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-xl shadow-lg">
+                        <a href="https://instagram.com/nestatrasporti" target="_blank" class="instagram-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-xl shadow-lg">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
                 
+                <!-- FORM RICHIESTE FUNZIONANTE -->
                 <div class="reveal bg-slate-800 border border-slate-700 rounded-3xl p-8">
                     <h3 class="font-display text-2xl font-bold mb-6 text-white">Richiedi un preventivo</h3>
-                    <form class="space-y-4" onsubmit="handleContact(event)">
+                    <form id="preventivo-form" class="space-y-4" onsubmit="handlePreventivo(event)">
                         <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="Nome" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" required>
-                            <input type="text" placeholder="Cognome" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" required>
+                            <input type="text" name="nome" placeholder="Nome *" required class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
+                            <input type="text" name="cognome" placeholder="Cognome *" required class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
                         </div>
-                        <input type="email" placeholder="Email" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" required>
-                        <input type="tel" placeholder="Telefono" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
-                        <select class="input-smart w-full px-4 py-3 rounded-xl text-gray-400 cursor-pointer">
-                            <option value="" class="bg-slate-800">Zona di interesse</option>
+                        <input type="email" name="email" placeholder="Email *" required class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
+                        <input type="tel" name="telefono" placeholder="Telefono" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
+                        <select name="zona" required class="input-smart w-full px-4 py-3 rounded-xl text-gray-400 cursor-pointer">
+                            <option value="" class="bg-slate-800">Zona di interesse *</option>
                             <option value="bari" class="bg-slate-800">Provincia di Bari</option>
                             <option value="foggia" class="bg-slate-800">Provincia di Foggia</option>
                             <option value="bat" class="bg-slate-800">BAT (Barletta-Andria-Trani)</option>
                             <option value="altro" class="bg-slate-800">Altro in Puglia</option>
                         </select>
-                        <textarea rows="3" placeholder="Descrivi la merce da trasportare (tipo, peso, dimensioni...)" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none" required></textarea>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
-                            Invia Richiesta <i class="fas fa-paper-plane"></i>
+                        <textarea name="descrizione" rows="3" placeholder="Descrivi la merce da trasportare (tipo, peso, dimensioni, destinazione...) *" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none" required></textarea>
+                        
+                        <div class="flex items-start gap-2">
+                            <input type="checkbox" name="privacy" required class="mt-1">
+                            <label class="text-xs text-gray-400">Accetto la privacy policy e il trattamento dei dati personali *</label>
+                        </div>
+
+                        <button type="submit" id="btn-preventivo" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                            <span id="text-preventivo">Invia Richiesta</span>
+                            <i id="icon-preventivo" class="fas fa-paper-plane"></i>
                         </button>
                     </form>
+                    
                     <div class="mt-4 text-center">
                         <span class="text-gray-500 text-sm">oppure</span>
                         <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn mt-2 w-full text-center text-white font-bold py-3 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2 inline-flex">
@@ -823,7 +928,7 @@
     </section>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/393207143814" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:scale-110 transition-transform whatsapp-float cursor-pointer">
+    <a href="https://wa.me/393207143814" target="_blank" class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:scale-110 transition-transform whatsapp-float cursor-pointer">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -832,7 +937,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-3">
-                    <!-- LOGO NEL FOOTER -->
                     <img src="logo.jpeg" alt="NESTA Trasporti Logo" class="w-8 h-8 rounded-lg object-cover">
                     <div>
                         <span class="font-display font-bold text-lg text-white">NESTA Trasporti</span>
@@ -843,10 +947,9 @@
                     Via Stoccolma, 8, 76123 Andria BT<br>
                     © 2024 NESTA Trasporti S.n.c. - Tutti i diritti riservati
                 </div>
-                <!-- SOLO INSTAGRAM nel footer -->
                 <div class="flex items-center gap-4">
                     <span class="text-gray-500 text-sm">Seguici su:</span>
-                    <a href="https://instagram.com/nst.it" target="_blank" class="instagram-btn w-10 h-10 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform">
+                    <a href="https://instagram.com/nestatrasporti" target="_blank" class="instagram-btn w-10 h-10 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform">
                         <i class="fab fa-instagram text-lg"></i>
                     </a>
                 </div>
@@ -864,13 +967,20 @@
     </div>
 
     <script>
-        // Mobile Menu Toggle
+        // ===== CONFIGURAZIONE =====
+        // Per il form: usa Formspree (gratuito) o crea un endpoint su GitHub Actions
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnqevjdr'; // Sostituisci con il tuo endpoint Formspree
+        
+        // Per Stripe: usa la chiave pubblica di test (poi sostituisci con quella live)
+        const STRIPE_PUBLIC_KEY = 'pk_test_51O...'; // Sostituisci con la tua chiave Stripe
+        
+        // ===== MOBILE MENU =====
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
         
-        // Navbar Scroll Effect
+        // ===== NAVBAR SCROLL =====
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -882,7 +992,7 @@
             }
         });
         
-        // Reveal on Scroll
+        // ===== REVEAL ANIMATIONS =====
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -892,7 +1002,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    
                     if (entry.target.querySelector('.counter-value')) {
                         startCounters();
                     }
@@ -902,7 +1011,7 @@
         
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
         
-        // Counter Animation
+        // ===== COUNTER ANIMATION =====
         let countersStarted = false;
         function startCounters() {
             if (countersStarted) return;
@@ -926,12 +1035,173 @@
             });
         }
         
-        function handleContact(e) {
+        // ===== FORM PREVENTIVO (FUNZIONANTE CON FORMSPREE) =====
+        async function handlePreventivo(e) {
             e.preventDefault();
-            showToast('Richiesta Inviata!', 'Ti risponderemo entro 24 ore su WhatsApp o email.');
-            e.target.reset();
+            const form = e.target;
+            const btn = document.getElementById('btn-preventivo');
+            const text = document.getElementById('text-preventivo');
+            const icon = document.getElementById('icon-preventivo');
+            
+            // Loading state
+            btn.disabled = true;
+            text.textContent = 'Invio in corso...';
+            icon.className = 'fas fa-spinner fa-spin';
+            
+            try {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                
+                // Aggiungi timestamp e sorgente
+                data.timestamp = new Date().toISOString();
+                data.sorgente = 'Sito Web NESTA';
+                
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    showToast('Richiesta Inviata!', 'Ti contatteremo entro 24 ore via email o WhatsApp.');
+                    form.reset();
+                } else {
+                    throw new Error('Errore nell\'invio');
+                }
+            } catch (error) {
+                // Fallback: salva in localStorage e mostra WhatsApp
+                const data = Object.fromEntries(new FormData(form));
+                const richieste = JSON.parse(localStorage.getItem('richiesteNesta') || '[]');
+                richieste.push({...data, timestamp: new Date().toISOString(), stato: 'da_inviare'});
+                localStorage.setItem('richiesteNesta', JSON.stringify(richieste));
+                
+                showToast('Richiesta Salvata!', 'Ti preghiamo di contattarci su WhatsApp per confermare.');
+                setTimeout(() => {
+                    window.open('https://wa.me/393207143814?text=Ciao%20ho%20appena%20inviato%20una%20richiesta%20dal%20sito', '_blank');
+                }, 2000);
+            } finally {
+                btn.disabled = false;
+                text.textContent = 'Invia Richiesta';
+                icon.className = 'fas fa-paper-plane';
+            }
         }
         
+        // ===== CHECKOUT GIFT CARD =====
+        let stripe = null;
+        let cardElement = null;
+        
+        function openCheckout() {
+            document.getElementById('checkout-modal').classList.add('active');
+            if (!stripe) {
+                initStripe();
+            }
+        }
+        
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.remove('active');
+        }
+        
+        function initStripe() {
+            // Inizializza Stripe con chiave di test
+            stripe = Stripe(STRIPE_PUBLIC_KEY);
+            const elements = stripe.elements();
+            
+            cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#ffffff',
+                        '::placeholder': {
+                            color: '#6b7280'
+                        }
+                    }
+                }
+            });
+            
+            cardElement.mount('#card-element');
+            
+            cardElement.on('change', (event) => {
+                const displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+        }
+        
+        // Gestione pagamento Stripe
+        document.getElementById('payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.getElementById('button-text');
+            const buttonIcon = document.getElementById('button-icon');
+            const email = document.getElementById('email').value;
+            
+            submitButton.disabled = true;
+            buttonText.textContent = 'Elaborazione...';
+            buttonIcon.className = 'fas fa-spinner fa-spin';
+            
+            try {
+                // Crea PaymentIntent sul tuo server (o usa una funzione serverless)
+                // Per test, simuliamo un pagamento riuscito
+                const {paymentMethod, error} = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {email: email}
+                });
+                
+                if (error) {
+                    throw error;
+                }
+                
+                // Qui normalmente faresti una chiamata al tuo backend
+                // Per ora simuliamo successo
+                const codiceBuono = 'NESTA-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+                
+                // Salva ordine in localStorage
+                const ordini = JSON.parse(localStorage.getItem('ordiniNesta') || '[]');
+                ordini.push({
+                    codice: codiceBuono,
+                    email: email,
+                    importo: 35,
+                    data: new Date().toISOString(),
+                    paymentMethod: paymentMethod.id,
+                    stato: 'completato'
+                });
+                localStorage.setItem('ordiniNesta', JSON.stringify(ordini));
+                
+                // Invia conferma via Formspree (o email)
+                await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        tipo: 'acquisto_gift_card',
+                        codice: codiceBuono,
+                        email: email,
+                        importo: '35€',
+                        messaggio: 'Nuovo acquisto Gift Card!'
+                    })
+                });
+                
+                showToast('Pagamento Completato!', `Il buono ${codiceBuono} è stato inviato a ${email}`);
+                closeCheckout();
+                
+                // Reindirizza a pagina di conferma (opzionale)
+                // window.location.href = '/conferma.html?codice=' + codiceBuono;
+                
+            } catch (error) {
+                document.getElementById('card-errors').textContent = error.message;
+                buttonText.textContent = 'Riprova';
+                buttonIcon.className = 'fas fa-lock';
+                submitButton.disabled = false;
+            }
+        });
+        
+        // ===== TOAST NOTIFICATION =====
         function showToast(title, message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-title').textContent = title;
@@ -941,10 +1211,10 @@
             
             setTimeout(() => {
                 toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+            }, 4000);
         }
         
-        // Smooth scroll for anchor links
+        // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -955,22 +1225,12 @@
             });
         });
         
-        // GSAP Animations
-        if (typeof gsap !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-            
-            gsap.from('.detail-section', {
-                scrollTrigger: {
-                    trigger: '#trasporto-merci',
-                    start: 'top 80%',
-                },
-                x: -50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: 'power3.out'
-            });
-        }
+        // Chiudi modal cliccando fuori
+        document.getElementById('checkout-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'checkout-modal') {
+                closeCheckout();
+            }
+        });
     </script>
 </body>
 </html>

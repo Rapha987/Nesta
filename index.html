@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <!-- STRIPE -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- STRIPE BUY BUTTON -->
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -330,7 +332,6 @@
             to { transform: rotate(360deg); }
         }
     </style>
-<base target="_blank">
 </head>
 <body class="antialiased">
 
@@ -467,10 +468,10 @@
                                     <div class="price-tag text-white px-6 py-3 rounded-2xl font-bold text-3xl">
                                         35€
                                     </div>
-                                    <button onclick="openCheckout()" class="bg-white text-slate-900 hover:bg-gray-100 font-bold px-8 py-4 rounded-2xl transition-all transform hover:scale-105 flex items-center gap-2">
+                                    <a href="https://buy.stripe.com/test_eVq5kE1cegQHdQk3ywfQI00" target="_blank" class="bg-white text-slate-900 hover:bg-gray-100 font-bold px-8 py-4 rounded-2xl transition-all transform hover:scale-105 flex items-center gap-2">
                                         <i class="fas fa-credit-card"></i>
                                         Acquista Ora
-                                    </button>
+                                    </a>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt mr-1"></i> Pagamento sicuro con Stripe</p>
                             </div>
@@ -490,7 +491,7 @@
         </div>
     </section>
 
-    <!-- MODAL CHECKOUT STRIPE -->
+    <!-- MODAL CHECKOUT STRIPE BUY BUTTON -->
     <div id="checkout-modal" class="modal">
         <div class="modal-content p-6">
             <div class="flex justify-between items-center mb-6">
@@ -515,28 +516,13 @@
                 </div>
             </div>
 
-            <form id="payment-form" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Email per ricevere il buono *</label>
-                    <input type="email" id="email" required class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="tua@email.com">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Nome e Cognome *</label>
-                    <input type="text" id="nome-cognome" required class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="Mario Rossi">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Dati della carta</label>
-                    <div id="card-element" class="StripeElement"></div>
-                    <div id="card-errors" class="text-red-400 text-sm mt-2"></div>
-                </div>
-
-                <button type="submit" id="submit-button" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2">
-                    <span id="button-text">Paga 35€</span>
-                    <i id="button-icon" class="fas fa-lock"></i>
-                </button>
-            </form>
+            <!-- STRIPE BUY BUTTON -->
+            <div class="flex justify-center py-4">
+                <stripe-buy-button
+                    buy-button-id="buy_btn_1T9s07J7kdsaJJy6fuf78o0x"
+                    publishable-key="pk_test_51T9rNbJ7kdsaJJy67VKtsxjpPOK10okHLKIYBU5sjvMWLWlqB69kgkJXdEPtWS8dgG3e0l4X0W3AsSXQpFin5c6P00jad4LuVr"
+                ></stripe-buy-button>
+            </div>
 
             <div class="mt-4 flex items-center justify-center gap-4 text-gray-500 text-sm">
                 <i class="fab fa-cc-visa text-2xl"></i>
@@ -1069,162 +1055,13 @@
         function openCheckout() {
             document.getElementById('checkout-modal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Inizializza Stripe solo quando serve
-            if (!stripe) {
-                initStripe();
-            }
         }
-        
+
         function closeCheckout() {
             document.getElementById('checkout-modal').classList.remove('active');
             document.body.style.overflow = '';
-            
-            // Reset form
-            document.getElementById('payment-form').reset();
-            document.getElementById('card-errors').textContent = '';
         }
-        
-        function initStripe() {
-            try {
-                // Inizializza Stripe con la chiave pubblica
-                stripe = Stripe(STRIPE_PUBLIC_KEY);
-                elements = stripe.elements();
-                
-                // Stile personalizzato per la card
-                const style = {
-                    base: {
-                        fontSize: '16px',
-                        color: '#ffffff',
-                        fontFamily: '"Inter", sans-serif',
-                        '::placeholder': {
-                            color: '#6b7280'
-                        },
-                        backgroundColor: 'transparent'
-                    },
-                    invalid: {
-                        color: '#ef4444',
-                        iconColor: '#ef4444'
-                    }
-                };
-                
-                cardElement = elements.create('card', {
-                    style: style,
-                    hidePostalCode: true
-                });
-                
-                cardElement.mount('#card-element');
-                
-                // Gestione errori
-                cardElement.on('change', (event) => {
-                    const displayError = document.getElementById('card-errors');
-                    if (event.error) {
-                        displayError.textContent = event.error.message;
-                    } else {
-                        displayError.textContent = '';
-                    }
-                });
-                
-                console.log('Stripe inizializzato correttamente');
-            } catch (error) {
-                console.error('Errore inizializzazione Stripe:', error);
-                showToast('Errore', 'Impossibile caricare il sistema di pagamento. Riprova più tardi.');
-            }
-        }
-        
-        // Gestione pagamento Stripe
-        document.getElementById('payment-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitButton = document.getElementById('submit-button');
-            const buttonText = document.getElementById('button-text');
-            const buttonIcon = document.getElementById('button-icon');
-            const email = document.getElementById('email').value;
-            const nomeCognome = document.getElementById('nome-cognome').value;
-            
-            // Validazione
-            if (!email || !nomeCognome) {
-                showToast('Errore', 'Compila tutti i campi obbligatori');
-                return;
-            }
-            
-            // Loading state
-            submitButton.disabled = true;
-            buttonText.textContent = 'Elaborazione...';
-            buttonIcon.className = 'spinner';
-            
-            try {
-                // Crea PaymentMethod
-                const {paymentMethod, error} = await stripe.createPaymentMethod({
-                    type: 'card',
-                    card: cardElement,
-                    billing_details: {
-                        email: email,
-                        name: nomeCognome
-                    }
-                });
-                
-                if (error) {
-                    throw error;
-                }
-                
-                // Genera codice buono univoco
-                const codiceBuono = 'NESTA-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-                
-                // Salva ordine in localStorage (per tracciamento)
-                const ordini = JSON.parse(localStorage.getItem('ordiniNesta') || '[]');
-                ordini.push({
-                    codice: codiceBuono,
-                    email: email,
-                    nome: nomeCognome,
-                    importo: 35,
-                    data: new Date().toISOString(),
-                    paymentMethodId: paymentMethod.id,
-                    stato: 'completato'
-                });
-                localStorage.setItem('ordiniNesta', JSON.stringify(ordini));
-                
-                // Invia conferma via Formspree
-                try {
-                    await fetch(FORMSPREE_ENDPOINT, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            tipo: 'acquisto_gift_card',
-                            codice: codiceBuono,
-                            email: email,
-                            nome: nomeCognome,
-                            importo: '35€',
-                            paymentMethod: paymentMethod.id,
-                            messaggio: 'Nuovo acquisto Gift Card NESTA Trasporti!'
-                        })
-                    });
-                } catch (formError) {
-                    console.log('Formspree non configurato, ordine salvato localmente');
-                }
-                
-                // Successo!
-                showToast('Pagamento Completato!', `Il buono ${codiceBuono} è stato inviato a ${email}`);
-                closeCheckout();
-                
-                // Reindirizza a WhatsApp per conferma
-                setTimeout(() => {
-                    const messaggio = `Ciao! Ho appena acquistato una Gift Card NESTA. Codice: ${codiceBuono}. Email: ${email}`;
-                    window.open(`https://wa.me/393207143814?text=${encodeURIComponent(messaggio)}`, '_blank');
-                }, 2000);
-                
-            } catch (error) {
-                console.error('Errore pagamento:', error);
-                document.getElementById('card-errors').textContent = error.message;
-                buttonText.textContent = 'Riprova';
-                buttonIcon.className = 'fas fa-lock';
-                submitButton.disabled = false;
-            }
-        });
-        
+
         // ===== FORM PREVENTIVO =====
         async function handlePreventivo(e) {
             e.preventDefault();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESTA Trasporti & Logistics | Il Futuro dei Trasporti</title>
+    <title>NESTA Trasporti & Logistics | Trasporto Merci Professionale</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -132,39 +132,9 @@
             transform: translateY(0);
         }
 
-        /* NUOVI STILI PACCHETTI - COLORI PIU' VIVI */
-        .package-card {
+        .detail-section {
             background: #1e293b;
-            border: 2px solid #334155;
-            transition: all 0.4s ease;
-        }
-
-        .package-card:hover {
-            transform: translateY(-10px);
-            border-color: #f59e0b;
-            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.4);
-        }
-
-        .package-featured {
-            background: #1e293b;
-            border: 3px solid #f59e0b;
-            position: relative;
-            overflow: hidden;
-            transform: scale(1.05);
-        }
-
-        .package-featured::before {
-            content: 'POPOLARE';
-            position: absolute;
-            top: 25px;
-            right: -30px;
-            background: #f59e0b;
-            color: #0f172a;
-            padding: 8px 40px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            transform: rotate(45deg);
-            z-index: 10;
+            border-left: 4px solid #f59e0b;
         }
 
         .whatsapp-btn {
@@ -177,17 +147,49 @@
             box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.5);
         }
 
-        /* Fix per visibilità testo */
-        .package-title {
-            color: #ffffff;
+        .feature-list li {
+            position: relative;
+            padding-left: 1.5rem;
         }
-        
-        .package-price {
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
             color: #f59e0b;
+            font-weight: bold;
         }
-        
-        .package-desc {
-            color: #94a3b8;
+
+        .whatsapp-float {
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Stile per mappa Puglia */
+        .puglia-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .puglia-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-5px);
+        }
+
+        .puglia-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         }
     </style>
 </head>
@@ -203,14 +205,15 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="font-display font-bold text-xl tracking-tight text-white">NST - NESTA TRASPORTI</span>
-                        <span class="text-xs text-gray-400 tracking-widest uppercase">Trasporti & Logistics</span>
+                        <span class="text-xs text-gray-400 tracking-widest uppercase">Trasporto Merci Professionale</span>
                     </div>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#servizi" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Servizi</a>
+                    <a href="#trasporto-merci" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Trasporto Merci</a>
+                    <a href="#copertura" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Dove Operiamo</a>
                     <a href="#chi-siamo" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Chi Siamo</a>
-                    <a href="#pacchetti" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Pacchetti</a>
                     <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all transform hover:scale-105 flex items-center gap-2">
                         <i class="fab fa-whatsapp text-lg"></i>
                         Scrivici su WhatsApp
@@ -227,8 +230,9 @@
         <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-gray-800">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#servizi" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Servizi</a>
+                <a href="#trasporto-merci" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Trasporto Merci</a>
+                <a href="#copertura" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Dove Operiamo</a>
                 <a href="#chi-siamo" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Chi Siamo</a>
-                <a href="#pacchetti" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Pacchetti</a>
                 <a href="https://wa.me/393207143814" target="_blank" class="block px-3 py-2 text-green-500 font-medium flex items-center gap-2">
                     <i class="fab fa-whatsapp"></i> WhatsApp
                 </a>
@@ -236,7 +240,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - RIMOSSO BADGE 24/7 -->
     <section class="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden pt-20">
         <div class="absolute inset-0 grid-pattern opacity-30"></div>
         
@@ -245,19 +249,16 @@
         <div class="absolute bottom-20 right-10 w-96 h-96 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow" style="animation-delay: 2s;"></div>
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 reveal">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-sm text-gray-300">Operativi 24/7 in tutta Italia</span>
-            </div>
+            <!-- BADGE 24/7 RIMOSSO -->
             
             <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-tight reveal">
-                Trasportiamo il <br>
-                <span class="gradient-text">futuro, oggi</span>
+                Trasporto Merci <br>
+                <span class="gradient-text">Professionale</span>
             </h1>
             
             <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 reveal">
-                Soluzioni logistiche innovative per aziende e privati. 
-                Velocità, sicurezza e tecnologia al servizio dei tuoi trasporti.
+                Specializzati nel trasporto di merci su strada in Puglia. 
+                Dal Barese al Foggiano, garantiamo sicurezza, puntualità e professionalità.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
@@ -265,8 +266,8 @@
                     <i class="fab fa-whatsapp text-xl"></i>
                     Chatta su WhatsApp
                 </a>
-                <a href="#pacchetti" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
-                    Vedi Pacchetti
+                <a href="#trasporto-merci" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
+                    Scopri il Servizio
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -301,58 +302,260 @@
     <section id="servizi" class="py-24 relative bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
-                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">I Nostri <span class="text-amber-500">Servizi</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">Soluzioni complete per ogni esigenza di trasporto e logistica</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Il Nostro <span class="text-amber-500">Servizio</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Trasporto merci su strada per ogni esigenza in Puglia</p>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Service 1 -->
-                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal cursor-pointer">
+                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-truck-moving"></i>
                     </div>
-                    <h3 class="font-display text-xl font-bold mb-3 text-white">Trasporto Merci</h3>
-                    <p class="text-gray-400 text-sm mb-4">Trasporto su strada per ogni tipologia di merce, con tracking GPS in tempo reale.</p>
-                    <div class="flex items-center text-amber-500 text-sm font-medium group-hover:gap-2 transition-all">
-                        Scopri di più <i class="fas fa-arrow-right ml-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3 text-white">Trasporto FTL</h3>
+                    <p class="text-gray-400 text-sm mb-4">Full Truck Load - Carichi completi dedicati solo alla tua merce, tempi rapidi e percorso diretto.</p>
                 </div>
                 
-                <!-- Service 2 -->
-                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal cursor-pointer">
+                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-globe-europe"></i>
+                        <i class="fas fa-boxes"></i>
                     </div>
-                    <h3 class="font-display text-xl font-bold mb-3 text-white">Trasporti Internazionali</h3>
-                    <p class="text-gray-400 text-sm mb-4">Connessioni con tutta Europa. Gestione doganale e documentazione inclusa.</p>
-                    <div class="flex items-center text-amber-500 text-sm font-medium group-hover:gap-2 transition-all">
-                        Scopri di più <i class="fas fa-arrow-right ml-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3 text-white">Trasporto LTL</h3>
+                    <p class="text-gray-400 text-sm mb-4">Less Than Truck Load - Carichi parziali condivisi, soluzione economica per piccole spedizioni.</p>
                 </div>
                 
-                <!-- Service 3 -->
-                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal cursor-pointer">
+                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-warehouse"></i>
+                        <i class="fas fa-satellite-dish"></i>
                     </div>
-                    <h3 class="font-display text-xl font-bold mb-3 text-white">Logistica Integrata</h3>
-                    <p class="text-gray-400 text-sm mb-4">Magazzinaggio, gestione scorte e distribuzione con software dedicato.</p>
-                    <div class="flex items-center text-amber-500 text-sm font-medium group-hover:gap-2 transition-all">
-                        Scopri di più <i class="fas fa-arrow-right ml-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3 text-white">Tracking GPS</h3>
+                    <p class="text-gray-400 text-sm mb-4">Monitoraggio in tempo reale della tua merce, notifiche automatiche e report dettagliati.</p>
                 </div>
                 
-                <!-- Service 4 -->
-                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal cursor-pointer">
+                <div class="group bg-slate-800 border border-slate-700 rounded-2xl p-8 card-hover reveal">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-user-tie"></i>
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="font-display text-xl font-bold mb-3 text-white">Noleggio con Conducente</h3>
-                    <p class="text-gray-400 text-sm mb-4">Autisti professionisti per trasporti dedicati e servizi personalizzati.</p>
-                    <div class="flex items-center text-amber-500 text-sm font-medium group-hover:gap-2 transition-all">
-                        Scopri di più <i class="fas fa-arrow-right ml-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-display text-xl font-bold mb-3 text-white">Assicurazione</h3>
+                    <p class="text-gray-400 text-sm mb-4">Copertura assicurativa fino a 2.000.000€ su tutti i trasporti, massima tranquillità.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEZIONE DETTAGLIATA: Trasporto Merci -->
+    <section id="trasporto-merci" class="py-24 bg-slate-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+                        <i class="fas fa-truck"></i>
+                        Trasporto Merci su Strada
+                    </div>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 text-white">
+                        Trasportiamo le tue <span class="text-blue-400">Merci</span> con cura
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-6">
+                        Servizio specializzato di trasporto merci su strada per aziende e privati. 
+                        Operiamo principalmente nel Barese e nel Foggiano, garantendo tempi certi e prezzi competitivi.
+                    </p>
+                    
+                    <div class="detail-section rounded-2xl p-6 mb-6">
+                        <h4 class="font-bold text-white mb-4 text-lg">Cosa trasportiamo:</h4>
+                        <ul class="feature-list space-y-3 text-gray-300">
+                            <li>Merci generali e prodotti industriali</li>
+                            <li>Prodotti alimentari e bevande</li>
+                            <li>Materiali edili e ceramiche</li>
+                            <li>Macchinari e attrezzature</li>
+                            <li>Arredi e complementi d'arredo</li>
+                            <li>Merci pericolose (ADR) - con autorizzazione</li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-slate-900 rounded-xl p-4 border border-slate-700 text-center">
+                            <div class="text-2xl font-bold text-blue-400">FTL</div>
+                            <div class="text-sm text-gray-500">Carichi completi</div>
+                        </div>
+                        <div class="bg-slate-900 rounded-xl p-4 border border-slate-700 text-center">
+                            <div class="text-2xl font-bold text-blue-400">LTL</div>
+                            <div class="text-sm text-gray-500">Carichi parziali</div>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20un%20preventivo%20per%20il%20trasporto%20di%20merci" target="_blank" class="whatsapp-btn inline-flex items-center gap-2 text-white px-8 py-3 rounded-full font-bold transition-all hover:scale-105">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        Richiedi Preventivo Gratuito
+                    </a>
+                </div>
+                
+                <div class="relative reveal">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-3xl transform rotate-3 opacity-20"></div>
+                    <div class="relative bg-slate-900 rounded-3xl p-8 border border-slate-700">
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                                    <i class="fas fa-weight-hanging text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Capacità di carico</h4>
+                                    <p class="text-gray-400 text-sm">Dal furgone (3,5t) all'autoarticolato (44t), gestiamo qualsiasi volume e peso.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                                    <i class="fas fa-map-marked-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Focus sul territorio</h4>
+                                    <p class="text-gray-400 text-sm">Specializzati nel Barese e Foggiano, con conoscenza approfondita del territorio pugliese.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                                    <i class="fas fa-clock text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Consegne rapide</h4>
+                                    <p class="text-gray-400 text-sm">Consegne in giornata tra Bari e Foggia, tempi ottimizzati per tutta la Puglia.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                                    <i class="fas fa-mobile-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Tracking in tempo reale</h4>
+                                    <p class="text-gray-400 text-sm">Segui la tua spedizione 24/7, ricevi notifiche automatiche su stato e posizione.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEZIONE: Dove Operiamo - MODIFICATA PER PUGLIA (BARESE E FOGGIANO) -->
+    <section id="copertura" class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-block px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-sm font-medium mb-4">
+                    <i class="fas fa-map-marker-alt mr-2"></i>Il Nostro Territorio
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4 text-white">Operiamo in <span class="text-amber-500">Puglia</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Specializzati nel Barese e nel Foggiano, copriamo tutta la regione con efficienza</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto reveal">
+                <!-- Provincia di Bari -->
+                <div class="puglia-card rounded-3xl p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -mr-16 -mt-16"></div>
+                    <div class="relative">
+                        <div class="w-20 h-20 puglia-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-city text-white text-3xl"></i>
+                        </div>
+                        <h3 class="font-display text-3xl font-bold text-white mb-4">Provincia di Bari</h3>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Bari e hinterland</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Bitonto, Modugno, Palo del Colle</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Altamura, Gravina in Puglia</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Monopoli, Polignano a Mare</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Molfetta, Giovinazzo, Trani</span>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-slate-700">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">Consegne</span>
+                                <span class="text-amber-500 font-bold">In giornata</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provincia di Foggia -->
+                <div class="puglia-card rounded-3xl p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -mr-16 -mt-16"></div>
+                    <div class="relative">
+                        <div class="w-20 h-20 puglia-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-tractor text-white text-3xl"></i>
+                        </div>
+                        <h3 class="font-display text-3xl font-bold text-white mb-4">Provincia di Foggia</h3>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Foggia e provincia</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>San Severo, Lucera</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Cerignola, Canosa di Puglia</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Manfredonia, Mattinata</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Vieste, Peschici, Rodi Garganico</span>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-slate-700">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">Consegne</span>
+                                <span class="text-amber-500 font-bold">24-48h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Altre province Puglia -->
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
+                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
+                    <div class="text-gray-400 font-medium">Lecce</div>
+                    <div class="text-xs text-gray-600">Su richiesta</div>
+                </div>
+                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
+                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
+                    <div class="text-gray-400 font-medium">Taranto</div>
+                    <div class="text-xs text-gray-600">Su richiesta</div>
+                </div>
+                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
+                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
+                    <div class="text-gray-400 font-medium">Brindisi</div>
+                    <div class="text-xs text-gray-600">Su richiesta</div>
+                </div>
+                <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 text-center opacity-60">
+                    <i class="fas fa-map-pin text-gray-500 mb-2"></i>
+                    <div class="text-gray-400 font-medium">Bat (Andria)</div>
+                    <div class="text-xs text-gray-600">Su richiesta</div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center reveal">
+                <p class="text-gray-500 text-sm">
+                    <i class="fas fa-info-circle text-amber-500 mr-2"></i>
+                    Il nostro focus principale è sul Barese e Foggiano. Per altre destinazioni in Puglia contattaci per un preventivo personalizzato.
+                </p>
             </div>
         </div>
     </section>
@@ -368,13 +571,13 @@
                         Chi Siamo
                     </div>
                     <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                        La fiducia si costruisce <br>
-                        <span class="gradient-text">km dopo km</span>
+                        Esperti del territorio <br>
+                        <span class="gradient-text">Pugliese</span>
                     </h2>
                     <p class="text-gray-400 text-lg mb-6 leading-relaxed">
-                        Da oltre 15 anni NESTA Trasporti è sinonimo di affidabilità nel settore logistico italiano. 
-                        La nostra flotta moderna e il team di esperti garantiscono servizi di trasporto 
-                        che superano le aspettative.
+                        NESTA Trasporti è un'azienda specializzata nel trasporto di merci su strada in Puglia. 
+                        Con sede ad Andria, operiamo principalmente nel Barese e Foggiano, 
+                        garantendo professionalità e conoscenza approfondita del territorio.
                     </p>
                     
                     <div class="space-y-4 mb-8">
@@ -383,8 +586,8 @@
                                 <i class="fas fa-check text-green-500 text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-white mb-1">Flotta Green</h4>
-                                <p class="text-gray-400 text-sm">Veicoli Euro 6 e pianificazione sostenibile delle rotte</p>
+                                <h4 class="font-bold text-white mb-1">Conoscenza del territorio</h4>
+                                <p class="text-gray-400 text-sm">Esperti delle strade del Barese e Foggiano, percorsi ottimizzati</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -392,8 +595,8 @@
                                 <i class="fas fa-check text-green-500 text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-white mb-1">Tecnologia Avanzata</h4>
-                                <p class="text-gray-400 text-sm">Tracking GPS, app dedicata e notifiche in tempo reale</p>
+                                <h4 class="font-bold text-white mb-1">Flotta Moderna</h4>
+                                <p class="text-gray-400 text-sm">Veicoli Euro 6 di ultima generazione, sempre manutenuti</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -401,15 +604,15 @@
                                 <i class="fas fa-check text-green-500 text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-white mb-1">Assicurazione Completa</h4>
-                                <p class="text-gray-400 text-sm">Copertura totale su tutti i trasporti fino a 2M€</p>
+                                <h4 class="font-bold text-white mb-1">Autisti Professionisti</h4>
+                                <p class="text-gray-400 text-sm">Personale qualificato e formato per ogni tipo di merce</p>
                             </div>
                         </div>
                     </div>
                     
                     <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn inline-flex items-center gap-2 text-white px-8 py-3 rounded-full font-bold transition-all hover:scale-105">
                         <i class="fab fa-whatsapp text-xl"></i>
-                        Chiedi Info su WhatsApp
+                        Contattaci su WhatsApp
                     </a>
                 </div>
                 
@@ -419,14 +622,14 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-4">
                                 <div class="bg-slate-800 rounded-2xl p-6 text-center border border-slate-700">
-                                    <i class="fas fa-award text-amber-500 text-3xl mb-2"></i>
-                                    <div class="text-2xl font-bold text-white">ISO 9001</div>
-                                    <div class="text-xs text-gray-500">Certificazione Qualità</div>
+                                    <i class="fas fa-map-marked-alt text-amber-500 text-3xl mb-2"></i>
+                                    <div class="text-2xl font-bold text-white">2</div>
+                                    <div class="text-xs text-gray-500">Province principali</div>
                                 </div>
                                 <div class="bg-slate-800 rounded-2xl p-6 text-center border border-slate-700">
-                                    <i class="fas fa-leaf text-green-500 text-3xl mb-2"></i>
-                                    <div class="text-2xl font-bold text-white">Eco</div>
-                                    <div class="text-xs text-gray-500">Sostenibilità</div>
+                                    <i class="fas fa-truck text-green-500 text-3xl mb-2"></i>
+                                    <div class="text-2xl font-bold text-white">50+</div>
+                                    <div class="text-xs text-gray-500">Veicoli in flotta</div>
                                 </div>
                             </div>
                             <div class="space-y-4 mt-8">
@@ -438,7 +641,7 @@
                                 <div class="bg-slate-800 rounded-2xl p-6 text-center border border-slate-700">
                                     <i class="fas fa-headset text-purple-500 text-3xl mb-2"></i>
                                     <div class="text-2xl font-bold text-white">24/7</div>
-                                    <div class="text-xs text-gray-500">Supporto</div>
+                                    <div class="text-xs text-gray-500">Supporto clienti</div>
                                 </div>
                             </div>
                         </div>
@@ -448,180 +651,13 @@
         </div>
     </section>
 
-    <!-- Packages Section - COLORI CORRETTI -->
-    <section id="pacchetti" class="py-24 bg-slate-900 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <div class="inline-block px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-sm font-medium mb-4">
-                    Per le Aziende in Puglia
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4 text-white">Scegli il tuo <span class="text-amber-500">Pacchetto</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">Soluzioni su misura per il trasporto di pedane complete o merce singola in tutta la Puglia</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 items-start">
-                <!-- Pacchetto Base -->
-                <div class="package-card rounded-3xl p-8 reveal">
-                    <div class="text-center mb-8">
-                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-box text-white text-2xl"></i>
-                        </div>
-                        <h3 class="font-display text-2xl font-bold package-title mb-2">Pacchetto Base</h3>
-                        <div class="text-4xl font-bold package-price mb-2">€150<span class="text-lg text-gray-400">/trasporto</span></div>
-                        <p class="package-desc text-sm">Ideale per piccoli carichi</p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Fino a 5 colli singoli</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Peso max 500kg totale</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Trasporto in Puglia</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Consegna in 48h</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Tracking base</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-500">
-                            <i class="fas fa-times text-red-500"></i>
-                            <span>Carico/scarico incluso</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20informazioni%20sul%20Pacchetto%20Base%20per%20trasporti%20in%20Puglia" target="_blank" class="whatsapp-btn block w-full text-center text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
-                        <i class="fab fa-whatsapp"></i>
-                        Richiedi su WhatsApp
-                    </a>
-                </div>
-
-                <!-- Pacchetto Business (Featured) -->
-                <div class="package-featured rounded-3xl p-8 reveal">
-                    <div class="text-center mb-8 pt-6">
-                        <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-pallet text-slate-900 text-2xl"></i>
-                        </div>
-                        <h3 class="font-display text-2xl font-bold package-title mb-2">Pacchetto Business</h3>
-                        <div class="text-4xl font-bold package-price mb-2">€350<span class="text-lg text-gray-400">/trasporto</span></div>
-                        <p class="package-desc text-sm">La scelta più richiesta</p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>1 pedana completa (80x120cm)</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Peso max 1000kg</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Trasporto Puglia + zone limitrofe</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Consegna in 24h</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Tracking GPS in tempo reale</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Carico e scarico inclusi</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Assicurazione base inclusa</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20informazioni%20sul%20Pacchetto%20Business%20per%20trasporti%20in%20Puglia" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-900 block w-full text-center font-bold py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
-                        <i class="fab fa-whatsapp"></i>
-                        Richiedi su WhatsApp
-                    </a>
-                </div>
-
-                <!-- Pacchetto Premium -->
-                <div class="package-card rounded-3xl p-8 reveal">
-                    <div class="text-center mb-8">
-                        <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-truck-loading text-white text-2xl"></i>
-                        </div>
-                        <h3 class="font-display text-2xl font-bold package-title mb-2">Pacchetto Premium</h3>
-                        <div class="text-4xl font-bold package-price mb-2">€650<span class="text-lg text-gray-400">/trasporto</span></div>
-                        <p class="package-desc text-sm">Per grandi volumi</p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Fino a 3 pedane complete</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Peso max 3000kg</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Trasporto nazionale incluso</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Consegna express 12-24h</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Tracking avanzato + notifiche</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Carico/scarico + montaggio</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Assicurazione premium 2M€</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Supporto dedicato 24/7</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20informazioni%20sul%20Pacchetto%20Premium%20per%20trasporti%20in%20Puglia" target="_blank" class="whatsapp-btn block w-full text-center text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
-                        <i class="fab fa-whatsapp"></i>
-                        Richiedi su WhatsApp
-                    </a>
-                </div>
-            </div>
-
-            <!-- Nota informativa -->
-            <div class="mt-12 text-center reveal">
-                <div class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-800 border border-slate-700 text-gray-400 text-sm">
-                    <i class="fas fa-info-circle text-amber-500"></i>
-                    <span>I prezzi sono indicativi per trasporti in Puglia. Per destinazioni diverse o quantitativi superiori, contattaci per un preventivo personalizzato.</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Contact Section -->
-    <section id="contatti" class="py-24 bg-slate-800">
+    <section id="contatti" class="py-24 bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16">
                 <div class="reveal">
                     <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 text-white">Restiamo in <span class="text-amber-500">Contatto</span></h2>
-                    <p class="text-gray-400 mb-8">Hai bisogno di un preventivo personalizzato o hai domande? Scrivici direttamente su WhatsApp per una risposta immediata.</p>
+                    <p class="text-gray-400 mb-8">Hai bisogno di un preventivo per il trasporto delle tue merci in Puglia? Scrivici su WhatsApp per una risposta immediata.</p>
                     
                     <div class="space-y-6">
                         <a href="https://wa.me/393207143814" target="_blank" class="flex items-center gap-4 group cursor-pointer">
@@ -648,27 +684,27 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
-                                <div class="text-sm text-gray-500">Sede</div>
-                                <div class="text-white font-medium">Via dei Trasporti 42, Milano (MI)</div>
+                                <div class="text-sm text-gray-500">Sede Operativa</div>
+                                <div class="text-white font-medium">Via Stoccolma, 8, 76123 Andria BT</div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="mt-8 flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-blue-400 transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-blue-400 transition-colors">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-pink-600 transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-pink-600 transition-colors">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
                 
-                <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8">
-                    <h3 class="font-display text-2xl font-bold mb-6 text-white">Invia una richiesta</h3>
+                <div class="reveal bg-slate-800 border border-slate-700 rounded-3xl p-8">
+                    <h3 class="font-display text-2xl font-bold mb-6 text-white">Richiedi un preventivo</h3>
                     <form class="space-y-4" onsubmit="handleContact(event)">
                         <div class="grid md:grid-cols-2 gap-4">
                             <input type="text" placeholder="Nome" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" required>
@@ -677,13 +713,12 @@
                         <input type="email" placeholder="Email" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" required>
                         <input type="tel" placeholder="Telefono" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
                         <select class="input-smart w-full px-4 py-3 rounded-xl text-gray-400 cursor-pointer">
-                            <option value="" class="bg-slate-900">Tipo di richiesta</option>
-                            <option value="base" class="bg-slate-900">Pacchetto Base</option>
-                            <option value="business" class="bg-slate-900">Pacchetto Business</option>
-                            <option value="premium" class="bg-slate-900">Pacchetto Premium</option>
-                            <option value="personalizzato" class="bg-slate-900">Preventivo Personalizzato</option>
+                            <option value="" class="bg-slate-800">Zona di interesse</option>
+                            <option value="bari" class="bg-slate-800">Provincia di Bari</option>
+                            <option value="foggia" class="bg-slate-800">Provincia di Foggia</option>
+                            <option value="altro" class="bg-slate-800">Altro in Puglia</option>
                         </select>
-                        <textarea rows="4" placeholder="Descrivi il tuo carico (numero colli, peso, destinazione...)" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none" required></textarea>
+                        <textarea rows="3" placeholder="Descrivi la merce da trasportare (tipo, peso, dimensioni...)" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none" required></textarea>
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
                             Invia Richiesta <i class="fas fa-paper-plane"></i>
                         </button>
@@ -701,27 +736,30 @@
     </section>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/393207143814" target="_blank" class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:scale-110 transition-transform animate-bounce" style="animation-duration: 3s;">
+    <a href="https://wa.me/393207143814" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:scale-110 transition-transform whatsapp-float cursor-pointer">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-700 py-12 bg-slate-900">
+    <footer class="border-t border-slate-800 py-12 bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold font-display">
                         N
                     </div>
-                    <span class="font-display font-bold text-lg text-white">NESTA Trasporti</span>
+                    <div>
+                        <span class="font-display font-bold text-lg text-white">NESTA Trasporti</span>
+                        <div class="text-xs text-gray-500">P.IVA 08987500728</div>
+                    </div>
                 </div>
-                <div class="text-gray-500 text-sm">
-                    © 2024 NESTA Trasporti S.n.c. - P.IVA 12345678901
+                <div class="text-gray-500 text-sm text-center">
+                    Via Stoccolma, 8, 76123 Andria BT<br>
+                    © 2024 NESTA Trasporti S.n.c. - Tutti i diritti riservati
                 </div>
                 <div class="flex gap-6 text-sm text-gray-400">
                     <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Termini e Condizioni</a>
                 </div>
             </div>
         </div>
@@ -766,7 +804,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                     
-                    // Start counters if in stats section
                     if (entry.target.querySelector('.counter-value')) {
                         startCounters();
                     }
@@ -833,12 +870,12 @@
         if (typeof gsap !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
             
-            gsap.from('.package-card, .package-featured', {
+            gsap.from('.detail-section', {
                 scrollTrigger: {
-                    trigger: '#pacchetti',
+                    trigger: '#trasporto-merci',
                     start: 'top 80%',
                 },
-                y: 50,
+                x: -50,
                 opacity: 0,
                 duration: 0.8,
                 stagger: 0.2,

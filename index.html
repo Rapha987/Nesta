@@ -135,6 +135,48 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .package-card {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(245, 158, 11, 0.6);
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.25);
+        }
+
+        .package-featured {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(30, 58, 138, 0.4) 100%);
+            border: 2px solid #f59e0b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-featured::before {
+            content: 'POPOLARE';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #f59e0b;
+            color: #0a1628;
+            padding: 5px 40px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.5);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -156,9 +198,10 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#servizi" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Servizi</a>
                     <a href="#chi-siamo" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Chi Siamo</a>
-                    <a href="#calcolatore" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Calcola Costi</a>
-                    <a href="#contatti" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all transform hover:scale-105 btn-glow">
-                        Richiedi Preventivo
+                    <a href="#pacchetti" class="text-gray-300 hover:text-amber-500 transition-colors text-sm font-medium">Pacchetti</a>
+                    <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all transform hover:scale-105 flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        Scrivici su WhatsApp
                     </a>
                 </div>
                 
@@ -173,8 +216,10 @@
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#servizi" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Servizi</a>
                 <a href="#chi-siamo" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Chi Siamo</a>
-                <a href="#calcolatore" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Calcola Costi</a>
-                <a href="#contatti" class="block px-3 py-2 text-amber-500 font-medium">Contattaci</a>
+                <a href="#pacchetti" class="block px-3 py-2 text-gray-300 hover:text-amber-500">Pacchetti</a>
+                <a href="https://wa.me/393207143814" target="_blank" class="block px-3 py-2 text-green-500 font-medium flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
             </div>
         </div>
     </nav>
@@ -204,12 +249,12 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
-                <a href="#calcolatore" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-nesta-dark font-bold px-8 py-4 rounded-full transition-all transform hover:scale-105 btn-glow flex items-center justify-center gap-2">
-                    <i class="fas fa-calculator"></i>
-                    Calcola Preventivo
+                <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn text-white font-bold px-8 py-4 rounded-full transition-all transform hover:scale-105 btn-glow flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    Chatta su WhatsApp
                 </a>
-                <a href="#servizi" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
-                    Scopri i Servizi
+                <a href="#pacchetti" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
+                    Vedi Pacchetti
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -250,7 +295,7 @@
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Service 1 -->
-                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer" onclick="selectService('merci')">
+                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-truck-moving"></i>
                     </div>
@@ -262,7 +307,7 @@
                 </div>
                 
                 <!-- Service 2 -->
-                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer" onclick="selectService('internazionale')">
+                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-globe-europe"></i>
                     </div>
@@ -274,7 +319,7 @@
                 </div>
                 
                 <!-- Service 3 -->
-                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer" onclick="selectService('logistica')">
+                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-warehouse"></i>
                     </div>
@@ -286,7 +331,7 @@
                 </div>
                 
                 <!-- Service 4 -->
-                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer" onclick="selectService('noleggio')">
+                <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 card-hover reveal cursor-pointer">
                     <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-user-tie"></i>
                     </div>
@@ -350,9 +395,10 @@
                         </div>
                     </div>
                     
-                    <button class="bg-white text-nesta-dark px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors">
-                        Leggi la nostra storia
-                    </button>
+                    <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn inline-flex items-center gap-2 text-white px-8 py-3 rounded-full font-bold transition-all hover:scale-105">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        Chiedi Info su WhatsApp
+                    </a>
                 </div>
                 
                 <div class="relative reveal">
@@ -390,80 +436,168 @@
         </div>
     </section>
 
-    <!-- Calculator Section -->
-    <section id="calcolatore" class="py-24 relative">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 reveal">
-                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Calcola il tuo <span class="text-amber-500">Preventivo</span></h2>
-                <p class="text-gray-400">Stima immediata dei costi di trasporto in pochi click</p>
+    <!-- Packages Section - Sostituisce il Calcolatore -->
+    <section id="pacchetti" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-block px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-sm font-medium mb-4">
+                    Per le Aziende in Puglia
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Scegli il tuo <span class="text-amber-500">Pacchetto</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Soluzioni su misura per il trasporto di pedane complete o merce singola in tutta la Puglia</p>
             </div>
             
-            <div class="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-sm reveal">
-                <form id="calculator-form" class="space-y-6" onsubmit="calculatePrice(event)">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Città di Partenza</label>
-                            <div class="relative">
-                                <i class="fas fa-map-marker-alt absolute left-4 top-3.5 text-gray-500"></i>
-                                <input type="text" id="from" class="input-smart w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="Es. Milano" required>
-                            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pacchetto Base -->
+                <div class="package-card rounded-3xl p-8 reveal">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-box text-blue-500 text-2xl"></i>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Città di Destinazione</label>
-                            <div class="relative">
-                                <i class="fas fa-map-marker-alt absolute left-4 top-3.5 text-gray-500"></i>
-                                <input type="text" id="to" class="input-smart w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="Es. Roma" required>
-                            </div>
-                        </div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Pacchetto Base</h3>
+                        <div class="text-4xl font-bold text-white mb-2">€150<span class="text-lg text-gray-400">/trasporto</span></div>
+                        <p class="text-gray-400 text-sm">Ideale per piccoli carichi</p>
                     </div>
                     
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Peso (kg)</label>
-                            <div class="relative">
-                                <i class="fas fa-weight-hanging absolute left-4 top-3.5 text-gray-500"></i>
-                                <input type="number" id="weight" class="input-smart w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="100" min="1" required>
-                            </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Fino a 5 colli singoli</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Peso max 500kg totale</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Trasporto in Puglia</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Consegna in 48h</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Tracking base</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-500">
+                            <i class="fas fa-times text-red-500"></i>
+                            <span>Carico/scarico incluso</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20informazioni%20sul%20Pacchetto%20Base%20per%20trasporti%20in%20Puglia" target="_blank" class="whatsapp-btn block w-full text-center text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp"></i>
+                        Richiedi su WhatsApp
+                    </a>
+                </div>
+
+                <!-- Pacchetto Business (Featured) -->
+                <div class="package-card package-featured rounded-3xl p-8 reveal transform md:-translate-y-4">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-pallet text-amber-500 text-2xl"></i>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Dimensioni (m³)</label>
-                            <div class="relative">
-                                <i class="fas fa-box absolute left-4 top-3.5 text-gray-500"></i>
-                                <input type="number" id="volume" class="input-smart w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-500" placeholder="1.5" step="0.1">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Tipo Servizio</label>
-                            <div class="relative">
-                                <i class="fas fa-truck absolute left-4 top-3.5 text-gray-500"></i>
-                                <select id="service-type" class="input-smart w-full pl-12 pr-4 py-3 rounded-xl text-white appearance-none cursor-pointer">
-                                    <option value="standard" class="bg-nesta-dark">Standard (3-5 gg)</option>
-                                    <option value="express" class="bg-nesta-dark">Express (24-48h)</option>
-                                    <option value="dedicato" class="bg-nesta-dark">Dedicato (immediato)</option>
-                                </select>
-                                <i class="fas fa-chevron-down absolute right-4 top-4 text-gray-500 pointer-events-none"></i>
-                            </div>
-                        </div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Pacchetto Business</h3>
+                        <div class="text-4xl font-bold text-white mb-2">€350<span class="text-lg text-gray-400">/trasporto</span></div>
+                        <p class="text-gray-400 text-sm">La scelta più richiesta</p>
                     </div>
                     
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-nesta-dark font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] btn-glow flex items-center justify-center gap-2">
-                        <i class="fas fa-calculator"></i>
-                        Calcola Preventivo Gratuito
-                    </button>
-                </form>
-                
-                <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-gradient-to-r from-blue-600/20 to-amber-500/20 rounded-2xl border border-amber-500/30">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div>
-                            <div class="text-sm text-gray-400 mb-1">Prezzo stimato</div>
-                            <div class="text-4xl font-bold text-white" id="price">€ 0,00</div>
-                            <div class="text-sm text-amber-500 mt-1" id="delivery-time">Consegna stimata: 3-5 giorni lavorativi</div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>1 pedana completa (80x120cm)</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Peso max 1000kg</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Trasporto Puglia + zone limitrofe</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Consegna in 24h</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Tracking GPS in tempo reale</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Carico e scarico inclusi</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Assicurazione base inclusa</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20informazioni%20sul%20Pacchetto%20Business%20per%20trasporti%20in%20Puglia" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-nesta-dark block w-full text-center font-bold py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp"></i>
+                        Richiedi su WhatsApp
+                    </a>
+                </div>
+
+                <!-- Pacchetto Premium -->
+                <div class="package-card rounded-3xl p-8 reveal">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-truck-loading text-purple-500 text-2xl"></i>
                         </div>
-                        <button onclick="openBooking()" class="bg-amber-500 hover:bg-amber-400 text-nesta-dark font-bold px-8 py-3 rounded-full transition-colors flex items-center gap-2">
-                            Prenota Ora <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Pacchetto Premium</h3>
+                        <div class="text-4xl font-bold text-white mb-2">€650<span class="text-lg text-gray-400">/trasporto</span></div>
+                        <p class="text-gray-400 text-sm">Per grandi volumi</p>
                     </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Fino a 3 pedane complete</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Peso max 3000kg</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Trasporto nazionale incluso</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Consegna express 12-24h</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Tracking avanzato + notifiche</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Carico/scarico + montaggio</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Assicurazione premium 2M€</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Supporto dedicato 24/7</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="https://wa.me/393207143814?text=Ciao!%20Vorrei%20informazioni%20sul%20Pacchetto%20Premium%20per%20trasporti%20in%20Puglia" target="_blank" class="whatsapp-btn block w-full text-center text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp"></i>
+                        Richiedi su WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Nota informativa -->
+            <div class="mt-12 text-center reveal">
+                <div class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-gray-400 text-sm">
+                    <i class="fas fa-info-circle text-amber-500"></i>
+                    <span>I prezzi sono indicativi per trasporti in Puglia. Per destinazioni diverse o quantitativi superiori, contattaci per un preventivo personalizzato.</span>
                 </div>
             </div>
         </div>
@@ -475,18 +609,19 @@
             <div class="grid lg:grid-cols-2 gap-16">
                 <div class="reveal">
                     <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Restiamo in <span class="text-amber-500">Contatto</span></h2>
-                    <p class="text-gray-400 mb-8">Hai bisogno di un preventivo personalizzato o hai domande? Siamo qui per aiutarti.</p>
+                    <p class="text-gray-400 mb-8">Hai bisogno di un preventivo personalizzato o hai domande? Scrivici direttamente su WhatsApp per una risposta immediata.</p>
                     
                     <div class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-blue-600/20 flex items-center justify-center text-blue-500">
-                                <i class="fas fa-phone"></i>
+                        <a href="https://wa.me/393207143814" target="_blank" class="flex items-center gap-4 group cursor-pointer">
+                            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-all">
+                                <i class="fab fa-whatsapp text-xl"></i>
                             </div>
                             <div>
-                                <div class="text-sm text-gray-500">Telefono</div>
-                                <div class="text-white font-medium">+39 02 1234 5678</div>
+                                <div class="text-sm text-gray-500">WhatsApp</div>
+                                <div class="text-white font-medium group-hover:text-green-400 transition-colors">+39 320 714 3814</div>
+                                <div class="text-xs text-green-500 mt-1">● Online ora - Rispondiamo subito</div>
                             </div>
-                        </div>
+                        </a>
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500">
                                 <i class="fas fa-envelope"></i>
@@ -497,7 +632,7 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
@@ -520,7 +655,8 @@
                     </div>
                 </div>
                 
-                <div class="reveal">
+                <div class="reveal bg-white/5 border border-white/10 rounded-3xl p-8">
+                    <h3 class="font-display text-2xl font-bold mb-6 text-white">Invia una richiesta</h3>
                     <form class="space-y-4" onsubmit="handleContact(event)">
                         <div class="grid md:grid-cols-2 gap-4">
                             <input type="text" placeholder="Nome" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500" required>
@@ -530,19 +666,32 @@
                         <input type="tel" placeholder="Telefono" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
                         <select class="input-smart w-full px-4 py-3 rounded-xl text-gray-400 cursor-pointer">
                             <option value="" class="bg-nesta-dark">Tipo di richiesta</option>
-                            <option value="preventivo" class="bg-nesta-dark">Richiesta Preventivo</option>
-                            <option value="informazioni" class="bg-nesta-dark">Informazioni Generali</option>
-                            <option value="reclamo" class="bg-nesta-dark">Assistenza Clienti</option>
+                            <option value="base" class="bg-nesta-dark">Pacchetto Base</option>
+                            <option value="business" class="bg-nesta-dark">Pacchetto Business</option>
+                            <option value="premium" class="bg-nesta-dark">Pacchetto Premium</option>
+                            <option value="personalizzato" class="bg-nesta-dark">Preventivo Personalizzato</option>
                         </select>
-                        <textarea rows="4" placeholder="Il tuo messaggio..." class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none" required></textarea>
+                        <textarea rows="4" placeholder="Descrivi il tuo carico (numero colli, peso, destinazione...)" class="input-smart w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none" required></textarea>
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
-                            Invia Messaggio <i class="fas fa-paper-plane"></i>
+                            Invia Richiesta <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
+                    <div class="mt-4 text-center">
+                        <span class="text-gray-500 text-sm">oppure</span>
+                        <a href="https://wa.me/393207143814" target="_blank" class="whatsapp-btn mt-2 w-full text-center text-white font-bold py-3 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2 inline-flex">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                            Scrivici su WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/393207143814" target="_blank" class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:scale-110 transition-transform animate-bounce" style="animation-duration: 3s;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <!-- Footer -->
     <footer class="border-t border-white/10 py-12 bg-nesta-dark">
@@ -567,7 +716,7 @@
     </footer>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-4 right-4 bg-white text-nesta-dark px-6 py-4 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+    <div id="toast" class="fixed bottom-24 right-4 bg-white text-nesta-dark px-6 py-4 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
         <i class="fas fa-check-circle text-green-500 text-xl"></i>
         <div>
             <div class="font-bold" id="toast-title">Successo!</div>
@@ -639,54 +788,9 @@
             });
         }
         
-        // Price Calculator
-        function calculatePrice(e) {
-            e.preventDefault();
-            
-            const from = document.getElementById('from').value;
-            const to = document.getElementById('to').value;
-            const weight = parseFloat(document.getElementById('weight').value) || 0;
-            const volume = parseFloat(document.getElementById('volume').value) || 0;
-            const serviceType = document.getElementById('service-type').value;
-            
-            // Simulated calculation logic
-            let basePrice = 50;
-            let pricePerKg = 0.50;
-            let multiplier = 1;
-            let deliveryText = "3-5 giorni lavorativi";
-            
-            if (serviceType === 'express') {
-                multiplier = 1.8;
-                deliveryText = "24-48 ore";
-            } else if (serviceType === 'dedicato') {
-                multiplier = 3;
-                deliveryText = "Consegna immediata";
-            }
-            
-            const totalPrice = (basePrice + (weight * pricePerKg) + (volume * 30)) * multiplier;
-            
-            document.getElementById('price').textContent = '€ ' + totalPrice.toFixed(2).replace('.', ',');
-            document.getElementById('delivery-time').textContent = 'Consegna stimata: ' + deliveryText;
-            
-            const resultDiv = document.getElementById('result');
-            resultDiv.classList.remove('hidden');
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        
-        function selectService(type) {
-            document.getElementById('service-type').value = type === 'merci' ? 'standard' : type === 'internazionale' ? 'express' : 'dedicato';
-            document.getElementById('calcolatore').scrollIntoView({ behavior: 'smooth' });
-            showToast('Servizio selezionato', 'Hai selezionato: ' + type);
-        }
-        
-        function openBooking() {
-            showToast('Reindirizzamento', 'Apertura form di prenotazione...');
-            document.getElementById('contatti').scrollIntoView({ behavior: 'smooth' });
-        }
-        
         function handleContact(e) {
             e.preventDefault();
-            showToast('Messaggio Inviato!', 'Ti risponderemo entro 24 ore.');
+            showToast('Richiesta Inviata!', 'Ti risponderemo entro 24 ore su WhatsApp o email.');
             e.target.reset();
         }
         
@@ -717,9 +821,9 @@
         if (typeof gsap !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
             
-            gsap.from('.card-hover', {
+            gsap.from('.package-card', {
                 scrollTrigger: {
-                    trigger: '#servizi',
+                    trigger: '#pacchetti',
                     start: 'top 80%',
                 },
                 y: 50,
